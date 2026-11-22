@@ -11,6 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Unpack project
+        run: |
+          mkdir /tmp/p
+          unzip -q project.bin -d /tmp/p
+          root=$(dirname "$(find /tmp/p -name settings.gradle.kts | head -1)")
+          cp -r "$root"/. .
+          find . -type f -not -path './.git/*' | sort
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
